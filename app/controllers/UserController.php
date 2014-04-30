@@ -74,7 +74,7 @@ class UserController extends BaseController {
 		// For example, to see the profile page of the user with an id of 1, you would go to the URL /user/1 in your browser.
 		// return "show user $id!";
 		$user = User::findOrFail($id);
-		return $user;
+		return View::make('user.profile')->with('user', $user);
 	}
 
 

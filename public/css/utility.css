@@ -1,0 +1,7 @@
+.center {
+	text-align: center;
+}
+/*Clearfix hack.  Read more here: http://learnlayout.com/clearfix.html*/
+.clearfix {
+  overflow: auto;
+}

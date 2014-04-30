@@ -1,6 +1,11 @@
 <?php
 
 class LessonController extends \BaseController {
+	public function showHeader($uid, $lid)
+	{
+		$lesson = Lesson::find($lid);
+		return View::make('lesson.header')->with('lesson',$lesson);
+	}
 
 	public function index($uid)
 	{
@@ -34,9 +39,12 @@ class LessonController extends \BaseController {
 	public function show($uid, $lid)
 	{
 		$lesson = Lesson::find($lid);
-		if($lesson->user_id == $uid)
+		$user = User::find($uid);
+		if($lesson->user_id == $user->id)
 		{
-			return $lesson;
+			// return $lesson;
+			return View::make('lesson.profile')->with('user',$user)
+																				 ->with('lesson',$lesson);
 		} else {
 			return "You don't have access!";
 		}

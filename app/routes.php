@@ -27,3 +27,6 @@ Route::get('/login', 'UserController@getLogin');
 Route::resource('user', 'UserController');
 Route::resource('user.lesson', 'LessonController');
 Route::resource('user.lesson.hotspot', 'HotspotController');
+
+// test routes
+Route::get('/user/{uid}/lesson/{lid}/header', 'LessonController@showHeader');
