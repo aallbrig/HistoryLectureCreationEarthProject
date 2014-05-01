@@ -62,11 +62,14 @@ class HotspotController extends \BaseController {
 
 	public function show($uid, $lid, $hid)
 	{
+		$user = User::find($uid);
 		$lesson = Lesson::find($lid);
-		if($lesson->user_id == $uid)
+		if($lesson->user_id == $user->id)
 		{
 			$hotspot = Hotspot::findOrFail($hid);
-			$this->layout->content = View::make('hotspot.profile')->with('hotspot', $hotspot);
+			return View::make('hotspot.profile')->with('user',$user)
+																				  ->with('lesson',$lesson)
+																				  ->with('hotspot',$hotspot);
 		} else {
 			return "You don't have access!";
 		}

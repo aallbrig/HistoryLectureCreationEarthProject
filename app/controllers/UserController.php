@@ -4,7 +4,7 @@ class UserController extends BaseController {
 
 	public function getLogin()
 	{
-		return View::make('layouts.login');
+		return View::make('pages.login');
 	}
 
 	/**

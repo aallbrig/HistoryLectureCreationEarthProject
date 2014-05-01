@@ -18,7 +18,36 @@ Route::get('/', function()
 });
 Route::get('/home', 'HomeController@getHome');
 Route::get('/test', 'TestRESTController@getTest');
-Route::get('/login', 'UserController@getLogin');
+Route::get('/login', 'UserController@getLogin', ['as'=>'login']);
+Route::post('/login', function(){
+	$rules = ['username'=>'required'
+					 ,'password'=>'required'];
+	$validation = Validator::make(Input::all(), $rules);
+	if($validation->fails()) {
+		return Redirect::to('/login')->with('message', 'Login failure');
+	}
+	if(Auth::attempt(['username'=>Input::get('username')
+									 ,'password'=>Input::get('password')]))
+	{
+		// return 'success';
+		return Redirect::to('/app');
+	} else {
+		return Redirect::to('/login')->with('message', 'Login failure');
+	}
+});
+Route::post('/logout', function() {
+	if(Auth::check()){
+		Auth::logout();
+	}
+	return Redirect::to('/login');
+});
+Route::get('/app', function(){
+	if(Auth::check()){
+		return View::make('pages.app');
+	} else {
+		return Redirect::route('login');
+	}
+}, ['as'=>'app']);
 //   https
 
 // filters
