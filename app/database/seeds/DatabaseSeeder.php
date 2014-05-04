@@ -40,6 +40,7 @@ class UserTableSeeder extends Seeder {
 				  																		,'description'=>$faker->text
 				  																		,'longitude'=>$faker->randomNumber(-180,180)
 				  																		,'latitude'=>$faker->randomNumber(-90,90)
+				  																		,'altitude'=>$faker->randomNumber(150, 500)
 				  																		,'lesson_id'=> $lesson->id));
 				  		echo("\nhotspot id: $hotspot->id lesson_id: $lesson->id");
 				  	}

@@ -9,7 +9,8 @@ class LessonController extends \BaseController {
 
 	public function index($uid)
 	{
-		return User::find($uid)->lessons;
+		return View::make('lesson.index')->with('user',User::find($uid))
+																		 ->with('lessons',User::find($uid)->lessons);
 	}
 
 	public function create($uid)

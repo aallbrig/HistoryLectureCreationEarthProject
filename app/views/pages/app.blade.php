@@ -5,8 +5,8 @@
 
 @section('content')
 <div class="row-fluid">
-	<div class="col-xs-4">
-		This is content
+	<div id="sidebar" class="col-xs-4">
+		{{ $lessons }}
 		{{ Form::open(['url'=>'/logout'])}}
 			{{ Form::submit('Logout', ['class'=>'btn btn-primary form-control'])}}
 		{{ Form::close() }}

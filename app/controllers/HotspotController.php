@@ -7,9 +7,13 @@ class HotspotController extends \BaseController {
 	public function index($uid, $lid)
 	{
 		$lesson = Lesson::find($lid);
-		if($lesson->user_id == $uid)
+		$user = User::find($uid);
+		if($lesson->user_id == $user->id)
 		{
-			return $lesson->hotspots;
+			// return $lesson->hotspots;
+			return View::make('hotspot.index')->with('user',$user)
+																		   ->with('lesson',$lesson)
+																		   ->with('hotspots',$lesson->hotspots);
 		} else {
 			return "You don't have access!";
 		}

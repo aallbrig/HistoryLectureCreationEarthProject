@@ -19,6 +19,7 @@ class CreateHotspotsTable extends Migration {
         $table->text('description');
         $table->decimal('longitude', 5, 2);
         $table->decimal('latitude', 5, 2);
+        $table->decimal('altitude', 5, 0);
         $table->integer('lesson_id')->unsigned();
         $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
     });
