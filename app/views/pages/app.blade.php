@@ -4,7 +4,18 @@
 @stop
 
 @section('content')
-<div class="row-fluid">
+<div id="navbar" class="row-fluid">
+	
+</div>
+
+<div class="row">
+	<div id="userPanel" class="col-xs-4">
+		@include('user.profile', ['user'=>$user])
+	</div>
+	<div id="topcontext" class="col-xs-8"></div>
+</div>
+
+<div class="row">
 	<div id="sidebar" class="col-xs-4">
 		{{ $lessons }}
 		{{ Form::open(['url'=>'/logout'])}}

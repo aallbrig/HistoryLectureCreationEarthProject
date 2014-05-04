@@ -1,11 +1,11 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="col-xs-9">
 		<h3>{{ $user->username }}</h3>
 		<br>
 		{{ Form::open(['route'=>['user.edit',$user->id]
 									,'class'=>'form'
 									,'method'=>'GET']); }}
-		{{ Form::submit('Manage Account', ['class'=>'btn btn-primary btn-block']) }}
+		{{ Form::submit('Manage Account', ['class'=>'manage btn btn-primary btn-block']) }}
 		{{ Form::close(); }}
 	</div>
 	<div class="col-xs-3">

@@ -44,7 +44,9 @@ Route::post('/logout', function() {
 Route::get('/app', function(){
 	if(Auth::check()){
 		$lessons = App::make('LessonController')->index(Auth::user()->id);
-		return View::make('pages.app')->with('lessons', $lessons);
+		$user    = User::find(Auth::user()->id);
+		return View::make('pages.app')->with('lessons', $lessons)
+																	->with('user', $user);
 	} else {
 		return Redirect::route('login');
 	}
