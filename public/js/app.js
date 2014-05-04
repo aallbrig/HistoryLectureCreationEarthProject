@@ -13,7 +13,7 @@ var app = (function(){
 	function bindUser(){
 		$userPanel  = $('#userPanel');
 		$userManage = $('#userPanel .manage');
-		$userBack   = $('#userPanel #b2u');
+		$userBack   = $('#userPanel .b2u');
 	}
 	function userEvents(){
 		$userManage
@@ -27,15 +27,14 @@ var app = (function(){
 				$userPanel.animate({opacity: 0},400, function(){
 					$userPanel.empty();
 					$userPanel.html(html);
-					bindHotspot();
-					hotspotEvents();
 					$userPanel.animate({opacity:1}, 400);
+					bindUser();
+					userEvents();
 				});
 			});
-			alert('click!');
 		});
 		$userBack
-		.css("border", "2px solid yello")
+		.css("border", "2px solid yellow")
 		.on("click", function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
@@ -45,9 +44,9 @@ var app = (function(){
 				$userPanel.animate({opacity: 0},400, function(){
 					$userPanel.empty();
 					$userPanel.html(html);
-					bindHotspot();
-					hotspotEvents();
 					$userPanel.animate({opacity:1}, 400);
+					bindUser();
+					userEvents();
 				});
 			});
 		})

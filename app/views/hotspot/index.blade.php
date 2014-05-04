@@ -1,3 +1,4 @@
+<hr>
 <div class="row">
 	<div class="col-xs-4">
 		<!-- FORM TO GET BACK TO LESSONS INDEX! -->
