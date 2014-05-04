@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-4">
 		<!-- FORM TO GET BACK TO LESSONS INDEX! -->
-		<button class="btn btn-primary">
+		<button class="b2l btn btn-primary">
 			<span class="glyphicon glyphicon-chevron-left"></span>
 		</button>
 	</div>
