@@ -9,8 +9,14 @@
 			</button>
 		{{ Form::close(); }}
 	</div>
-	<div class="col-xs8">
+	<div class="col-xs-8">
 		<h4>Back to Lessons</h4>
+	</div>
+	<div class="col-xs-8 col-xs-offset-2">
+		{{ Form::open(['route'=>['user.lesson.hotspot.create', $user->id, $lesson->id]
+									,'method'=>'GET']); }}
+			<button class="btn btn-primary">Create new hotspot</button>
+		{{ Form::close(); }}
 	</div>
 </div>
 <hr>

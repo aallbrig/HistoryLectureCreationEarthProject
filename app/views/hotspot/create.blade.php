@@ -1,8 +1,9 @@
+<div class="row">
 {{ Form::open(array('route' => ['user.lesson.hotspot.store', $user->id, $lesson->id], 'files'=>true)); }}
-	{{ Form::label('title', 'Title of lesson'); }}
+	{{ Form::label('title', 'Title of hotspot'); }}
 	{{ Form::text('title'); }}
 
-	{{ Form::label('description', 'Description of lesson'); }}
+	{{ Form::label('description', 'Description of hotspot'); }}
 	{{ Form::textarea('description'); }}
 
 	{{ Form::label('image', 'Image for hotspot'); }}
@@ -14,5 +15,6 @@
 	{{ Form::label('latitude', 'Latitude of hotspot'); }}
 	{{ Form::text('latitude'); }}
 
-	{{ Form::submit('Create New Lesson'); }}
+	{{ Form::submit('Create New Lesson', ['class'=>'createH btn btn-primary form-control']); }}
 {{ Form::close(); }}
+</div>
