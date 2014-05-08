@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<div class="col-xs-4">
 <div class="panel panel-default">
   <div class="panel-body">
     {{ Form::model($hotspot, array('route' => ['user.lesson.hotspot.update', $user->id, $lesson->id, $hotspot->id]
@@ -39,5 +37,4 @@
 			{{ Form::close(); }}
 		</div>
   </div>
-</div>
 </div>

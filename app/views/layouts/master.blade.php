@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css">
 		{{ HTML::style('css/utility.css'); }}
 
 		@yield('styles')

@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div id="{{ $lesson->id }}" class="panel panel-default">
   <div class="panel-heading">
 		<h4>{{ $lesson->title }}</h4>
   </div>
@@ -13,13 +13,14 @@
 		<div class="col-xs-8">
 			{{ Form::open(['route'=>['user.lesson.hotspot.index', $user->id, $lesson->id]
 										,'method'=>'GET']); }}
-				<button type="submit" data-header-url="user/{{$user->id}}/lesson/{{$lesson->id}}/header" class="present btn btn-primary form-control">Present</button>
+				<button type="submit" data-header-url="user/{{$user->id}}/lesson/{{$lesson->id}}/header" class="present btn btn-sm btn-primary form-control">Present</button>
 			{{ Form::close(); }}
 		</div>
 		<div class="col-xs-4">
 			{{ Form::open(['route'=>['user.lesson.edit', $user->id, $lesson->id]
-										,'method'=>'GET']); }}
-			{{ Form::submit('Edit', ['class'=>'editL btn btn-default form-control']); }}
+										,'method'=>'GET'
+										,'data-index'=>$lesson->id]); }}
+			{{ Form::submit('Edit', ['class'=>'editL btn btn-default btn-sm form-control']); }}
 			{{ Form::close(); }}
 		</div>
   </div>

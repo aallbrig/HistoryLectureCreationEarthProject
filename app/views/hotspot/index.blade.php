@@ -15,12 +15,13 @@
 	<div class="col-xs-8 col-xs-offset-2">
 		{{ Form::open(['route'=>['user.lesson.hotspot.create', $user->id, $lesson->id]
 									,'method'=>'GET']); }}
-			<button class="btn btn-primary">Create new hotspot</button>
+			<button class="createH btn btn-primary">Create new hotspot</button>
 		{{ Form::close(); }}
 	</div>
 </div>
 <hr>
-
-@foreach ($hotspots as $hotspot)
-	@include('hotspot.profile', ['user'=>$user, 'lesson'=>$lesson, 'hotspot'=>$hotspot])
-@endforeach
+<div id="hotspotsContainer">
+	@foreach ($hotspots as $hotspot)
+		@include('hotspot.profile', ['user'=>$user, 'lesson'=>$lesson, 'hotspot'=>$hotspot])
+	@endforeach
+</div>

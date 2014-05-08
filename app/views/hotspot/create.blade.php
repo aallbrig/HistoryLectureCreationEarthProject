@@ -15,6 +15,6 @@
 	{{ Form::label('latitude', 'Latitude of hotspot'); }}
 	{{ Form::text('latitude'); }}
 
-	{{ Form::submit('Create New Lesson', ['class'=>'createH btn btn-primary form-control']); }}
+	{{ Form::submit('Create New Hotspot', ['class'=>'create btn btn-primary form-control']); }}
 {{ Form::close(); }}
 </div>
