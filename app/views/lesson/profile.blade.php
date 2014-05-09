@@ -13,7 +13,7 @@
 		<div class="col-xs-8">
 			{{ Form::open(['route'=>['user.lesson.hotspot.index', $user->id, $lesson->id]
 										,'method'=>'GET']); }}
-				<button type="submit" data-header-url="user/{{$user->id}}/lesson/{{$lesson->id}}/header" class="present btn btn-sm btn-primary form-control">Present</button>
+				<input type="submit" data-header-url="user/{{$user->id}}/lesson/{{$lesson->id}}/header" class="present btn btn-sm btn-primary form-control" value="Present"/>
 			{{ Form::close(); }}
 		</div>
 		<div class="col-xs-4">

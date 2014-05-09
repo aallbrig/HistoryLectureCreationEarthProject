@@ -6,8 +6,6 @@ var giveSerializeArrayGetJson = function(array) {
   return json;
 }
 var app = (function(){
-	// OH MY GOODNESS WHAT HAVE I CREATED?
-	// TODO: refactor for modularity
 	var url, longitude, latitude, altitude, index, id
 			,l$ = $
 			,$sidebar    = l$('#sidebar')
@@ -49,6 +47,7 @@ var app = (function(){
 	}
 	function userEvents(){
 		$userManage
+		.off()
 		.on("click", function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
@@ -217,7 +216,6 @@ var app = (function(){
 		});
 		$lessonDeleteSubmit
 		.off()
-		.css('border', '1px solid yellow')
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
@@ -285,7 +283,6 @@ var app = (function(){
 	}
 	function hotspotEvents(){
 		$hotspotView
-		.css('border', '2px solid yellow')
 		.off()
 		.on('click', function(e){
 			e.preventDefault();
@@ -311,7 +308,6 @@ var app = (function(){
 		});
 		$hotspotEditSubmit
 		.off()
-		.css('border', '2px solid yellow')
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().parent().attr('action');
@@ -331,7 +327,7 @@ var app = (function(){
 			});
 		});
 		$hotspotDeleteSubmit
-		.css('border', '2px solid yellow')
+		.off()
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
@@ -362,7 +358,6 @@ var app = (function(){
 		});
 		$hotspotCreateSubmit
 		.off()
-		.css('border', '2px solid green')
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
