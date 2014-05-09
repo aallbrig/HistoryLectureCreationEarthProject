@@ -38,8 +38,8 @@ Route::post('/logout', function() {
 	if(Auth::check()){
 		Auth::logout();
 	}
-	return "success";
-	return Redirect::to('/login');
+	return "<a href='/login'>Back to login</a>";
+	return Redirect::route('/login');
 });
 Route::get('/app', function(){
 	if(Auth::check()){
@@ -48,7 +48,8 @@ Route::get('/app', function(){
 		return View::make('pages.app')->with('lessons', $lessons)
 																	->with('user', $user);
 	} else {
-		return Redirect::route('login');
+		return "Not logged in. <a href='/login'>Please log in</a>";
+		return Redirect::route('/login');
 	}
 }, ['as'=>'app']);
 //   https
