@@ -23,11 +23,13 @@ class HotspotController extends \BaseController {
 	{
 		$user = User::find($uid);
 		$lesson = Lesson::find($lid);
+		$url = action('HotspotController@index', [$uid, $lid]);
 		if(!$user->id == $lesson->user_id){
 			return "Not authorized";
 		}
 		return View::make("hotspot.create")->with("user", $user)
-																			 ->with("lesson", $lesson);
+																			 ->with("lesson", $lesson)
+																			 ->with("url", $url);
 	}
 
 	public function store($uid, $lid)
@@ -41,27 +43,27 @@ class HotspotController extends \BaseController {
 		$rules = array('title'       => 'required'
 		 							,'description' => 'required'
 		 							,'longitude'   => 'required | integer | between:-180,180'
-		 							,'latitude'    => 'required | integer | between:-180,180');
+		 							,'latitude'    => 'required | integer | between:-180,180'
+		 							,'altitude'    => 'required | integer');
 		$validator = Validator::make(Input::all(), $rules);
 		if($validator->fails())
 		{
-			return "Edit lesson failed";
+			return "Edit hotspot failed";
 		} else {
-			echo "\nInput has everything required for edit user";
 			$lesson = Lesson::find($lid);
 			if(!$lesson->user_id == $uid){
 				return "Not authorized!";
 			}
 			$hotspot = new Hotspot;
-			$hotspot->title = Input::get('title');
+			$hotspot->title       = Input::get('title');
 			$hotspot->description = Input::get('description');
-			$hotspot->longitude = Input::get('longitude');
-			$hotspot->latitude = Input::get('latitude');
-			$hotspot->lesson_id = $lesson->id;
+			$hotspot->longitude   = Input::get('longitude');
+			$hotspot->latitude    = Input::get('latitude');
+			$hotspot->altitude    = Input::get('altitude');
+			$hotspot->lesson_id   = $lesson->id;
 			$hotspot->save();
-			return "Create success!";
+			return "success! $hotspot->id";
 		}
-		return "Hotspot store!";
 	}
 
 	public function show($uid, $lid, $hid)

@@ -1,5 +1,6 @@
 <div class="row">	
-{{ Form::open(array('route' => ['user.lesson.store', $uid])); }}
+{{ Form::open(['route' => ['user.lesson.store', $user->id]
+							,'data-index' => $url]); }}
 	{{ Form::label('title', 'Title of lesson'); }}
 	{{ Form::text('title','',['class'=>'form-control']); }}
 	{{ Form::label('description', 'Description of lesson'); }}

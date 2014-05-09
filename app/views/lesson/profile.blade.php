@@ -19,7 +19,7 @@
 		<div class="col-xs-4">
 			{{ Form::open(['route'=>['user.lesson.edit', $user->id, $lesson->id]
 										,'method'=>'GET'
-										,'data-index'=>$lesson->id]); }}
+										,'data-id'=>$lesson->id]); }}
 			{{ Form::submit('Edit', ['class'=>'editL btn btn-default btn-sm form-control']); }}
 			{{ Form::close(); }}
 		</div>

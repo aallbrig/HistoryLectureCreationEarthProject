@@ -29,7 +29,6 @@ Route::post('/login', function(){
 	if(Auth::attempt(['username'=>Input::get('username')
 									 ,'password'=>Input::get('password')]))
 	{
-		// return 'success';
 		return Redirect::to('/app');
 	} else {
 		return Redirect::to('/login')->with('message', 'Login failure');
@@ -39,6 +38,7 @@ Route::post('/logout', function() {
 	if(Auth::check()){
 		Auth::logout();
 	}
+	return "success";
 	return Redirect::to('/login');
 });
 Route::get('/app', function(){

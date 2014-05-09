@@ -3,7 +3,7 @@
 	<div class="col-xs-4">
 		<!-- FORM TO GET BACK TO LESSONS INDEX! -->
 		{{ Form::open(['route'=>['user.lesson.index', $user->id]
-										,'method'=>'GET']); }}
+									,'method'=>'GET']); }}
 			<button type="submit" class="b2l btn btn-primary">
 				<span class="glyphicon glyphicon-chevron-left"></span>
 			</button>
@@ -15,7 +15,7 @@
 	<div class="col-xs-8 col-xs-offset-2">
 		{{ Form::open(['route'=>['user.lesson.hotspot.create', $user->id, $lesson->id]
 									,'method'=>'GET']); }}
-			<button class="createH btn btn-primary">Create new hotspot</button>
+			<button class="createH btn btn-primary form-control">Create new hotspot</button>
 		{{ Form::close(); }}
 	</div>
 </div>

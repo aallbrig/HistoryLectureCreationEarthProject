@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div id="{{ $hotspot->id }}" class="panel panel-default">
   <div class="panel-body">
     <div class="col-xs-9">
 			<h4>{{ $hotspot->title }}</h4>
@@ -16,7 +16,8 @@
 		<div class="col-xs-4">
 			{{ Form::open(['route'=>['user.lesson.hotspot.edit', $user->id, $lesson->id, $hotspot->id]
 										,'class'=>'form'
-										,'method'=>'GET']); }}
+										,'method'=>'GET'
+										,'data-id'=>$hotspot->id]); }}
 			{{ Form::submit('Edit', ['class'=>'editH btn btn-default form-control']); }}
 			{{ Form::close(); }}
 		</div>

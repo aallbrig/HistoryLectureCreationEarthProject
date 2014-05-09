@@ -4,7 +4,10 @@ class UserController extends BaseController {
 
 	public function getLogin()
 	{
-		return View::make('pages.login');
+		$url = action('UserController@create');
+		$registerForm = App::make('UserController')->create();
+		return View::make('pages.login')->with('url', $url)
+																		->with('registerForm', $registerForm);
 	}
 
 	/**

@@ -16,12 +16,12 @@
 			{{ Form::text('username'); }}
 			{{ Form::label('password', 'Password'); }}
 			{{ Form::password('password'); }}
-			{{ Form::submit('Edit User'); }}
+			{{ Form::submit('Edit User', ['class'=>'edit btn btn-primary form-control']); }}
 		{{ Form::close(); }}
 
 		{{ Form::open(array('route' => array('user.destroy', $user->id)
 											 ,'method'=>'DELETE'))}}
-			{{ Form::submit('Delete User'); }}
+			{{ Form::submit('Delete User', ['class'=>'delete btn btn-primary form-control']); }}
 		{{ Form::close(); }}
 	</div>
 </div>

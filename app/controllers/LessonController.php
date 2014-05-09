@@ -15,7 +15,10 @@ class LessonController extends \BaseController {
 
 	public function create($uid)
 	{
-		return View::make('lesson.create')->with('uid', $uid);
+		$user = User::find($uid);
+		$url = action('LessonController@index', [$uid]);
+		return View::make('lesson.create')->with('user', $user)
+																			->with('url', $url);
 	}
 
 	public function store($uid)
@@ -55,9 +58,12 @@ class LessonController extends \BaseController {
 	{
 		$user = User::find($uid);
 		$lesson = Lesson::find($lid);
+		$url = action('LessonController@show', [$uid, $lid]);
 		if($lesson->user_id == $user->id)
 		{
-			return View::make('lesson.edit')->with('user', $user)->with('lesson', $lesson);
+			return View::make('lesson.edit')->with('user', $user)
+																			->with('lesson', $lesson)
+																			->with('url', $url);
 		} else {
 			return 'no access!';
 		}

@@ -1,7 +1,14 @@
+var giveSerializeArrayGetJson = function(array) {
+	var json = {};
+  $.each(array, function() {
+    json[this.name] = this.value || '';
+  });
+  return json;
+}
 var app = (function(){
 	// OH MY GOODNESS WHAT HAVE I CREATED?
 	// TODO: refactor for modularity
-	var url, longitude, latitude, altitude, index
+	var url, longitude, latitude, altitude, index, id
 			,l$ = $
 			,$sidebar    = l$('#sidebar')
 			,$topbar     = l$('#topcontext')
@@ -22,7 +29,7 @@ var app = (function(){
 			,$hotspotDelete
 			,$hotspotDeleteSubmit
 			,$backToLessons;
-	l$allSubmits.attr('disabled', 'disabled');
+	$allSubmits.attr('disabled', 'disabled');
 	function rebindAll(){
 		bindUser();
 		bindLesson();
@@ -37,12 +44,11 @@ var app = (function(){
 		$userPanel        = l$('#userPanel');
 		$userManage       = l$('#userPanel .manage');
 		$userBack         = l$('#userPanel .b2u');
-		$userEditSubmit   = l$('');
-		$userDeleteSubmit = l$('');
+		$userEditSubmit   = l$('#userPanel .edit');
+		$userDeleteSubmit = l$('#userPanel .delete');
 	}
 	function userEvents(){
 		$userManage
-		.css("border", "2px solid yellow")
 		.on("click", function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
@@ -58,8 +64,52 @@ var app = (function(){
 				});
 			});
 		});
+		$userEditSubmit
+		.off()
+		.on('click', function(e){
+			e.preventDefault();
+			url = $(this).parent().attr('action');
+			data = giveSerializeArrayGetJson($(this).parent().serializeArray());
+			l$.ajax({type:"POST"
+							,url :url
+							,data:data})
+			.done(function(html){
+				console.log("response");
+				console.debug(html);
+				l$.ajax({type:"GET"
+								,url: url
+								,success: function(html){
+									$userPanel.animate({opacity: 0},400, function(){
+										$userPanel.empty();
+										$userPanel.html(html);
+										$userPanel.animate({opacity:1}, 400);
+										bindUser();
+										userEvents();
+									});
+								}});
+			});
+		});
+		$userDeleteSubmit
+		.off()
+		.on("click", function(e){
+			e.preventDefault();
+			url = $(this).parent().attr('action');
+			if(confirm("You are about to delete your user!  Are you sure?!")){
+				if(confirm("ARE YOU SURE?!  This action cannot be undone!")){
+					if(confirm("Seriously, you're about to delete all created lesson, all created hotspots!  This action cannot be undone!")){
+						if(confirm("Reconsider?  If this isn't the original user: this is quite a mean thing to do!")){
+							response = prompt("Alright, Enter your password to continue with delete", "password");
+							l$.ajax({type:"DELETE"
+							,url:url
+							,success: function(){
+								window.location = "/login";
+							}});
+						}
+					}
+				}
+			}
+		});
 		$userBack
-		.css("border", "2px solid yellow")
 		.on("click", function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
@@ -80,7 +130,7 @@ var app = (function(){
 		$lessonPresent        = $('#sidebar .present');
 		$lessonEdit           = $('#sidebar .editL');
 		$lessonEditSubmit     = $('#sidebar .edit')
-		$lessonCreate  = $('#sidebar .createL');
+		$lessonCreate         = $('#sidebar .createL');
 		$lessonCreateSubmit   = $('#sidebar .create');
 		$lessonDelete         = $('#sidebar .deleteL');
 		$lessonDeleteSubmit   = $('#sidebar .delete');
@@ -120,11 +170,11 @@ var app = (function(){
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
-			index = $(this).parent().data('index');
+			id = $(this).parent().data('id');
 			l$.ajax({type:"GET"
 							,url:url
 							,success: function(html){
-								$("#"+index).replaceWith(html);
+								$("#"+id).replaceWith(html);
 								bindLesson();
 								lessonEvents();
 							}});
@@ -134,14 +184,52 @@ var app = (function(){
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
-			alert('click! ' + url);
+			data = giveSerializeArrayGetJson($(this).parent().serializeArray());
+			id = $(this).parent().data('id');
+			l$.ajax({type:"POST"
+							,url :url
+							,data:data})
+			.done(function(html){
+				console.log("response");
+				console.debug(html);
+				l$.ajax({type:"GET"
+								,url: url
+								,success: function(html){
+									$("#"+id).replaceWith(html);
+									bindLesson();
+									lessonEvents();
+								}});
+			});
 		});
-		$lessonDeleteSubmit
+		$lessonEditBack
 		.off()
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
-			alert('click!' + url);
+			id  = $(this).parent().data('id');
+			l$.ajax({type:"GET"
+							,url:url
+							,success: function(html){
+								$("#"+id).replaceWith(html);
+								bindLesson();
+								lessonEvents();
+							}});
+		});
+		$lessonDeleteSubmit
+		.off()
+		.css('border', '1px solid yellow')
+		.on('click', function(e){
+			e.preventDefault();
+			url = $(this).parent().attr('action');
+			id  = $(this).parent().data('id');
+			console.log('url ' + url + ' id: ' + id);
+			l$.ajax({type:"DELETE"
+							,url:url
+							,success: function(html){
+								$("#"+id).remove();
+								bindLesson();
+								lessonEvents();
+							}});
 		});
 		$lessonCreate
 		.off()
@@ -161,16 +249,26 @@ var app = (function(){
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
-			l$.ajax({type:"GET"
-							,url:url})
+			// data = $(this).parent().serializeArray();
+			data = giveSerializeArrayGetJson($(this).parent().serializeArray());
+			redirect = $(this).parent().data('index');
+			l$.ajax({type:"POST"
+							,url :url
+							,data:data})
 			.done(function(html){
-				$sidebar.animate({opacity:0}, 400, function(){
-					$sidebar.empty();
-					$sidebar.html(html);
-					bindLesson();
-					lessonEvents();
-					$sidebar.animate({opacity:1}, 400);
-				});
+				console.log("response");
+				console.debug(html);
+				l$.ajax({type:"GET"
+								,url: redirect
+								,success: function(html){
+									$sidebar.animate({opacity:0}, 400, function(){
+										$sidebar.empty();
+										$sidebar.html(html);
+										bindLesson();
+										lessonEvents();
+										$sidebar.animate({opacity:1}, 400);
+									});
+								}})
 			});
 		});
 	}
@@ -180,7 +278,6 @@ var app = (function(){
 		$hotspotCreateSubmit  = $('#sidebar .create');
 		$hotspotEdit          = $('#sidebar .editH');
 		$hotspotEditSubmit    = $('#sidebar .edit');
-		$hotspotDelete        = $('#sidebar .deleteH');
 		$hotspotDeleteSubmit  = $('#sidebar .delete');
 		$backToLessons        = $('#sidebar .b2l');
 		$hotspotCreate = $('#sidebar .createH');
@@ -188,6 +285,7 @@ var app = (function(){
 	}
 	function hotspotEvents(){
 		$hotspotView
+		.css('border', '2px solid yellow')
 		.off()
 		.on('click', function(e){
 			e.preventDefault();
@@ -196,31 +294,57 @@ var app = (function(){
 			earth.setRange(   parseFloat($(this).data("altitude"))   );
 			earth.look();
 		});
-		$hotspotCreate
+		$hotspotEdit
 		.off()
 		.on('click', function(e){
 			e.preventDefault();
 			url = $(this).parent().attr('action');
-			alert('click! ' + url);
-			// url = $(this).parent().attr('action');
-			// l$.ajax({type:"GET"
-			// 				,url:url})
-			// .done(function(html){
-			// 	$sidebar.animate({opacity:0}, 400, function(){
-			// 		$sidebar.empty();
-			// 		$sidebar.html(html);
-			// 		bindHotspot();
-			// 		hotspotEvents();
-			// 		$sidebar.animate({opacity:1}, 400);
-			// 	});
-			// });
+			id = $(this).parent().data('id');
+			console.log(url);
+			l$.ajax({type:"GET"
+							,url:url
+							,success: function(html){
+								$("#"+id).replaceWith(html);
+								bindHotspot();
+								hotspotEvents();
+							}});
 		});
-		$hotspotEdit
-		.css('border', '2px solid brown')
+		$hotspotEditSubmit
 		.off()
+		.css('border', '2px solid yellow')
 		.on('click', function(e){
 			e.preventDefault();
-			alert('click!');
+			url = $(this).parent().parent().attr('action');
+			data = giveSerializeArrayGetJson($(this).parent().parent().serializeArray());
+			id = $(this).parent().parent().data('id');
+			l$.ajax({type:"POST"
+							,url :url
+							,data:data})
+			.done(function(html){
+				l$.ajax({type:"GET"
+								,url: url
+								,success: function(html){
+									$("#"+id).replaceWith(html);
+									bindHotspot();
+									hotspotEvents();
+								}});
+			});
+		});
+		$hotspotDeleteSubmit
+		.css('border', '2px solid yellow')
+		.on('click', function(e){
+			e.preventDefault();
+			url = $(this).parent().attr('action');
+			id  = $(this).parent().data('id');
+			console.log(url);
+			console.log(id);
+			l$.ajax({type:"DELETE"
+							,url:url
+							,success: function(html){
+								$("#"+id).remove();
+								bindLesson();
+								lessonEvents();
+							}});
 		});
 		$hotspotCreate
 		.off()
@@ -232,8 +356,36 @@ var app = (function(){
 							,url:url})
 			.done(function(html){
 				l$('#hotspotsContainer').prepend(html);
-				bindLesson();
-				lessonEvents();
+				bindHotspot();
+				hotspotEvents();
+			});
+		});
+		$hotspotCreateSubmit
+		.off()
+		.css('border', '2px solid green')
+		.on('click', function(e){
+			e.preventDefault();
+			url = $(this).parent().attr('action');
+			// data = $(this).parent().serializeArray();
+			data = giveSerializeArrayGetJson($(this).parent().serializeArray());
+			redirect = $(this).parent().data('index');
+			l$.ajax({type:"POST"
+							,url :url
+							,data:data})
+			.done(function(html){
+				console.log("response");
+				console.debug(html);
+				l$.ajax({type:"GET"
+								,url: redirect
+								,success: function(html){
+									$sidebar.animate({opacity:0}, 400, function(){
+										$sidebar.empty();
+										$sidebar.html(html);
+										bindHotspot();
+										hotspotEvents();
+										$sidebar.animate({opacity:1}, 400);
+									});
+								}})
 			});
 		});
 		$backToLessons

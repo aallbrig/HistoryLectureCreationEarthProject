@@ -61,6 +61,11 @@
 			earth.latitude = lookAt.getLatitude();
 			earth.longitude = lookAt.getLongitude();
 			earth.altitude = lookAt.getRange();
+			ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+			ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+			ge.getOptions().setStatusBarVisibility(true);
+			ge.getOptions().setUnitsFeetMiles(true);
+			ge.getOptions().setFadeInOutEnabled(false);
 			if(callback && typeof(callback) === "function") {
 				callback()
 			}

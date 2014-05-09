@@ -1,10 +1,11 @@
-<div class="panel panel-default">
+<div id="{{ $hotspot->id }}" class="panel panel-default">
   <div class="panel-body">
     {{ Form::model($hotspot, array('route' => ['user.lesson.hotspot.update', $user->id, $lesson->id, $hotspot->id]
 															,'files'=>true
-															,'method'=>'PUT')); }}
-			{{ Form::label('title', 'Title of lesson'); }}
-			{{ Form::text('title', '', ['class'=>'form-control']); }}
+															,'method'=>'PUT'
+															,'data-id'=>$hotspot->id)); }}
+		{{ Form::label('title', 'Title of lesson'); }}
+		{{ Form::text('title', '', ['class'=>'form-control']); }}
 		<hr>
 		{{ Form::label('description', 'Description of lesson'); }}
 		<br>
@@ -27,13 +28,14 @@
 			<hr>
 		</div>
 		<div class="col-xs-8">
-			{{ Form::submit('Submit Edit Lesson', ['class'=>'btn btn-primary form-control']); }}
+			{{ Form::submit('Submit Edit Lesson', ['class'=>'edit btn btn-primary form-control']); }}
 		{{ Form::close(); }}
 		</div>
 		<div class="col-xs-4">
 			{{ Form::open(array('route' => ['user.lesson.hotspot.destroy', $user->id, $lesson->id, $hotspot->id]
-																		,'method'=>'DELETE')); }}
-				{{ Form::submit('Delete', ['class'=>'btn btn-default form-control']); }}
+																		,'method'=>'DELETE'
+																		,'data-id'=>$hotspot->id)); }}
+				{{ Form::submit('Delete', ['class'=>'delete btn btn-default form-control']); }}
 			{{ Form::close(); }}
 		</div>
   </div>
