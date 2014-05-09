@@ -53,7 +53,7 @@ class UserController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		if($validator->fails())
 		{
-			return "\nCreate user failed";
+			return "\nCreate user failed <a href='/login'>Back to login</a>";
 		} else {
 			echo "\nInput has everything required for a new user";
 			$user = new User;
@@ -61,7 +61,7 @@ class UserController extends BaseController {
 			$user->email    = Input::get('email');
 			$user->password = Hash::make( Input::get('password') );
 			$user->save();
-			return "\nCreate success!";
+			return "\nCreate success! <a href='/login'>Back to login</a>";
 		}
 	}
 
