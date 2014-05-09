@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-xs-9">
-		<h3 class="text-center">User: {{ $user->username }}</h3>
+		<h4 class="text-center">User: {{ $user->username }}</h4>
 		<br>
 		{{ Form::open(['route'=>['user.edit',$user->id]
 									,'class'=>'form'
